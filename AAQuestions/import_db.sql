@@ -1,4 +1,5 @@
 PRAGMA foreign_keys = ON;
+
 DROP TABLE IF EXISTS users;
 
 CREATE TABLE users (
@@ -35,7 +36,7 @@ CREATE TABLE replies (
     id INTEGER PRIMARY KEY,
     body TEXT NOT NULL,
     question_id INTEGER NOT NULL,
-    parent_id INTEGER NOT NULL,
+    parent_id INTEGER,
     user_id INTEGER NOT NULL,
 
     FOREIGN KEY (question_id) REFERENCES questions(id),
@@ -64,3 +65,10 @@ INSERT INTO
     questions (title, body, author_id)
 VALUES
     ('SQL', 'How do I make a database :(', (SELECT id FROM users WHERE fname = 'Philip'));
+
+INSERT INTO
+    replies(body, question_id, parent_id, user_id)
+VALUES  
+    ('IDK LOL', 1, NULL, 2), 
+    ('Okay Thank you......',1, 1, 1)
+

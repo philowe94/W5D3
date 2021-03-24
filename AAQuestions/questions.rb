@@ -58,6 +58,14 @@ class Question
 
     Question.new(questions.first)
   end
+
+  def self.find_by_author_id(author_id)
+    questions = QuestionsDatabase.instance.execute(<<-SQL, author_id)
+      SELECT * FROM questions WHERE author_id = ?
+    SQL
+
+    Question.new(questions.first)
+  end
 end
 
 class QuestionFollow
@@ -99,6 +107,23 @@ class Reply
 
     Reply.new(reply.first)
   end
+
+  def self.find_by_user_id(user_id)
+    reply = QuestionsDatabase.instance.execute(<<-SQL, user_id)
+      SELECT * FROM replies WHERE user_id = ?
+    SQL
+
+    Reply.new(reply.first)
+  end
+
+  def self.find_by_question_id(user_id)
+    reply = QuestionsDatabase.instance.execute(<<-SQL, question_id)
+      SELECT * FROM replies WHERE question_id = ?
+    SQL
+
+    Reply.new(reply.first)
+  end
+
 end
 
 class QuestionLike
