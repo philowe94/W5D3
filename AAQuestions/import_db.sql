@@ -59,21 +59,33 @@ INSERT INTO
     users (fname, lname)
 VALUES
     ('Philip', 'Lowe'),
-    ('Julia', 'Kim');
+    ('Julia', 'Kim'),
+    ('Darren', 'Eid');
+
 
 INSERT INTO
     questions (title, body, author_id)
 VALUES
-    ('SQL', 'How do I make a database :(', (SELECT id FROM users WHERE fname = 'Philip'));
+    ('SQL', 'How do I make a database :(', (SELECT id FROM users WHERE fname = 'Philip')),
+    ('Ruby', 'How do I make a class :(', (SELECT id FROM users WHERE fname = 'Julia')),
+    ('General', 'Do ur hoemwork', (SELECT id FROM users WHERE fname = 'Darren'));
 
 INSERT INTO
     replies(body, question_id, parent_id, user_id)
 VALUES  
     ('IDK LOL', 1, NULL, 2), 
-    ('Okay Thank you......',1, 1, 1);
+    ('Okay Thank you......',1, 1, 1),
+    ('you just type class', 2, NULL, 2), 
+    ('Okay Thank you......',3, NULL, 1),
+    ('Okay Thank you......',2, 2, 1);
+
 
 INSERT INTO 
     question_follows(user_id, question_id)
 VALUES
     (1,1),
-    (2,1);
+    (2,1),
+    (3,1),
+    (2,2),
+    (1,3),
+    (2,3);

@@ -29,6 +29,10 @@ class User
     Reply.find_by_user_id(self.id)
   end
 
+  def followed_questions
+    QuestionFollows.followed_questions_for_user_id(self.id)
+  end
+
   def self.find_by_name(fname, lname)
     users = QuestionsDatabase.instance.execute(<<-SQL, fname, lname)
       SELECT * FROM users WHERE fname = ? AND lname = ?
@@ -67,6 +71,10 @@ class Question
     Reply.find_by_question_id(self.id)
   end
 
+  def followers
+    QuestionFollow.followers_for_question_id(self.id)
+  end
+
   def self.find_by_id(id)
     questions = QuestionsDatabase.instance.execute(<<-SQL, id)
       SELECT * FROM questions WHERE id = ?
@@ -93,6 +101,27 @@ class QuestionFollow
     @user_id = options['user_id']
     @question_id = options['question_id']
   end
+
+  #Fetches the n most followed questions.
+  def self.most_followed_questions(n)
+    most_followed_qs = QuestionsDatabase.instance.execute(<<-SQL, n)
+      SELECT
+        questions.title, questions.body, questions.author_id
+      FROM
+        questions
+      JOIN
+        question_follows ON question_follows.question_id = questions.id
+      GROUP BY 
+        question_id
+      ORDER BY 
+        COUNT(question_follows.id) DESC
+      LIMIT
+        ?
+      SQL
+
+      most_followed_qs.map {|question| Question.new(question)}
+  end
+
 
   def self.find_by_id(id)
     question_follow = QuestionsDatabase.instance.execute(<<-SQL, id)
