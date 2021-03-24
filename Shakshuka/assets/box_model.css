@@ -85,7 +85,7 @@ a {
 }
 
 nav {
-  display: inline-block;
+  float: right;
 }
 
 aside {
@@ -124,4 +124,14 @@ textarea {
 
 nav ul {
   display: flex;
+}
+
+header img {
+  float: left;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
 }
