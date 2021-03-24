@@ -70,5 +70,10 @@ INSERT INTO
     replies(body, question_id, parent_id, user_id)
 VALUES  
     ('IDK LOL', 1, NULL, 2), 
-    ('Okay Thank you......',1, 1, 1)
+    ('Okay Thank you......',1, 1, 1);
 
+INSERT INTO 
+    question_follows(user_id, question_id)
+VALUES
+    (1,1),
+    (2,1);
